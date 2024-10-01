@@ -24,9 +24,9 @@ CREATE TABLE taylorhart.fct_nba_game_details (
   m_personal_fouls DOUBLE,
   m_points DOUBLE,
   m_plus_minues DOUBLE,
-  game_date DATE,
-  season INTEGER,
-  team_did_win BOOLEAN
+  dim_game_date DATE,
+  dim_season INTEGER,
+  dim_team_did_win BOOLEAN
 )
 WITH (
   format = 'PARQUET',
