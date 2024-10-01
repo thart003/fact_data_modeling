@@ -1,0 +1,18 @@
+WITH games AS (
+  SELECT game_id, season, home_team_wins, home_team_id, visitor_team_id
+  FROM taylorhart.nba_games
+)
+SELECT 
+  g.game_id,
+  gd.team_id,
+  gd.player_id,
+  gd.player_name as dim_player_name,
+  gd.start_position as dim_start_position,
+  gd.comment LIKE '%DND%' AS dim_did_not_dress,
+  gd.comment LIKE '%NWT%' AS dim_not_with_team,
+  CAST(SPLIT(min, ':')[1] AS INTEGER) * 60 + CAST(SPLIT(min, ':')[2] AS DOUBLE) AS m_seconds_played,
+  CASE WHEN gd.team_id = g.home_team_id THEN g.home_team_wins = 1 ELSE home_team_wins = 0 END AS dim_team_did_win
+FROM games g 
+JOIN taylorhart.nba_game_details gd ON g.game_id = gd.game_id
+
+LIMIT 1000
