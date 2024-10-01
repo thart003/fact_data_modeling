@@ -1,0 +1,10 @@
+CREATE TABLE taylorhart.fct_nba_game_details (
+  game_id BIGINT,
+  team_id BIGINT,
+  player_id BIGINT,
+  dim_team_abbreviation VARCHAR,
+  dim_player_name VARCHAR,
+  dim_start_position VARCHAR
+)
+
+SELECT DISTINCT comment FROM taylorhart.nba_game_details;
