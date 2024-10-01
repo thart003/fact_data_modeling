@@ -12,6 +12,7 @@ SELECT
   gd.start_position as dim_start_position,
   gd.comment LIKE '%DND%' AS dim_did_not_dress,
   gd.comment LIKE '%NWT%' AS dim_not_with_team,
+  CASE WHEN CARDINALITY(SPLIT(min, ':')) > 1 THEN
   CAST(CAST(SPLIT(min, ':')[1] AS DOUBLE) * 60 + CAST(SPLIT(min, ':')[2] AS DOUBLE) AS INTEGER) AS m_seconds_played,
   CAST(fgm AS DOUBLE) AS m_field_goals_made,
   CAST(fga AS DOUBLE) AS m_field_goals_attempted,
