@@ -1,9 +1,10 @@
+INSERT INTO taylorhart.fct_nba_game_details
 WITH games AS (
   SELECT game_id, game_date_est, season, home_team_wins, home_team_id, visitor_team_id
   FROM taylorhart.nba_games
 )
 SELECT 
-  g.game_id,
+  CAST(g.game_id AS BIGINT) as game_id,
   gd.team_id,
   gd.player_id,
   gd.player_name as dim_player_name,
@@ -30,4 +31,4 @@ SELECT
 FROM games g 
 JOIN taylorhart.nba_game_details gd ON g.game_id = gd.game_id
 
-LIMIT 1000
+
