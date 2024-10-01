@@ -13,7 +13,11 @@ SELECT
   gd.comment LIKE '%DND%' AS dim_did_not_dress,
   gd.comment LIKE '%NWT%' AS dim_not_with_team,
   CASE WHEN CARDINALITY(SPLIT(min, ':')) > 1 THEN
-  CAST(CAST(SPLIT(min, ':')[1] AS DOUBLE) * 60 + CAST(SPLIT(min, ':')[2] AS DOUBLE) AS INTEGER) AS m_seconds_played,
+    CAST(CAST(SPLIT(min, ':')[1] AS DOUBLE) * 60 + CAST(SPLIT(min, ':')[2] AS DOUBLE) AS INTEGER) 
+    ELSE
+    CAST(min AS INTEGER)
+    END
+  AS m_seconds_played,
   CAST(fgm AS DOUBLE) AS m_field_goals_made,
   CAST(fga AS DOUBLE) AS m_field_goals_attempted,
   CAST(fg3m AS DOUBLE) AS m_3_pointers_made,
@@ -25,6 +29,7 @@ SELECT
   CAST(reb AS DOUBLE) as m_rebounds,
   CAST(ast AS DOUBLE) as m_assists,
   CAST(stl AS DOUBLE) as m_steals,
+  CAST(blk AS DOUBLE) as m_blocks,
   CAST(to AS DOUBLE) as m_turnovers,
   CAST(plus_minus AS DOUBLE) as m_plus_minus,
   g.game_date_est AS dim_game_date,
