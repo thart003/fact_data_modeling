@@ -7,6 +7,7 @@ SELECT
   CAST(g.game_id AS BIGINT) as game_id,
   gd.team_id,
   gd.player_id,
+  g.team_abbreviation as dim_team_abbreviation,
   gd.player_name as dim_player_name,
   gd.start_position as dim_start_position,
   gd.comment LIKE '%DND%' AS dim_did_not_dress,
