@@ -1,5 +1,5 @@
 WITH games AS (
-  SELECT game_id, season, home_team_wins, home_team_id, visitor_team_id
+  SELECT game_id, game_date_est, season, home_team_wins, home_team_id, visitor_team_id
   FROM taylorhart.nba_games
 )
 SELECT 
@@ -11,6 +11,21 @@ SELECT
   gd.comment LIKE '%DND%' AS dim_did_not_dress,
   gd.comment LIKE '%NWT%' AS dim_not_with_team,
   CAST(SPLIT(min, ':')[1] AS INTEGER) * 60 + CAST(SPLIT(min, ':')[2] AS DOUBLE) AS m_seconds_played,
+  CAST(fgm AS DOUBLE) AS m_field_goals_made,
+  CAST(fga AS DOUBLE) AS m_field_goals_attempted,
+  CAST(fg3m AS DOUBLE) AS m_3_pointers_made,
+  CAST(fg3a AS DOUBLE) AS m_3_pointers_attempted,
+  CAST(ftm AS DOUBLE) AS m_free_throws_made,
+  CAST(fta AS DOUBLE) AS m_free_throws_attempted,
+  CAST(oreb AS DOUBLE) as m_offensive_rebounds,
+  CAST(dreb AS DOUBLE) as m_defensive_rebounds,
+  CAST(reb AS DOUBLE) as m_rebounds,
+  CAST(ast AS DOUBLE) as m_assists,
+  CAST(stl AS DOUBLE) as m_steals,
+  CAST(to AS DOUBLE) as m_turnovers,
+  CAST(plus_minus AS DOUBLE) as m_plus_minus,
+  g.game_date_est AS dim_game_date,
+  g.season AS dim_season,
   CASE WHEN gd.team_id = g.home_team_id THEN g.home_team_wins = 1 ELSE home_team_wins = 0 END AS dim_team_did_win
 FROM games g 
 JOIN taylorhart.nba_game_details gd ON g.game_id = gd.game_id
