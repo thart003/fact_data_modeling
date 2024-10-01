@@ -1,4 +1,4 @@
-INSERT INTO taylorhart.fct_nba_game_details
+INSERT INTO 
 WITH games AS (
   SELECT game_id, game_date_est, season, home_team_wins, home_team_id, visitor_team_id
   FROM taylorhart.nba_games
