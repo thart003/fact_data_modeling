@@ -9,7 +9,7 @@ WITH today AS (
     user_id,
     CAST(SUM(
     CASE WHEN CONTAINS(dates_active, sequence_date) THEN
-      POW(2, 31 - DATE_DIFF('day', sequence_date, date))
+      POW(2, 30 - DATE_DIFF('day', sequence_date, date))
     ELSE 0
     END
     ) AS BIGINT) as history_int  
@@ -22,7 +22,8 @@ WITH today AS (
   )
 
   SELECT *,
-    TO_BASE(history_int, 2) AS history_in_binary
+    TO_BASE(history_int, 2) AS history_in_binary,
+  BIT_COUNT(history_int, 32) AS num_days_active
   FROM date_list_int
     
 
