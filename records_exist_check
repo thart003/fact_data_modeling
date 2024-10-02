@@ -9,10 +9,10 @@ WITH today AS (
     user_id,
     CAST(SUM(
     CASE WHEN CONTAINS(dates_active, sequence_date) THEN
-      POW(2, 30 - DATE_DIFF('day', sequence_date, date))
+      POW(2, 31 - DATE_DIFF('day', sequence_date, date))
     ELSE 0
     END
-    ) AS INTEGER) as history_int  
+    ) AS BIGINT) as history_int  
 
 
   FROM 
