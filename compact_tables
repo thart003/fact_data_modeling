@@ -1,1 +1,10 @@
+CREATE TABLE taylorhart.web_users_cumulated (
+  user_id BIGINT,
+  dates_active ARRAY(DATE),
+  date DATE
+) WITH (
+  format = 'PARQUET',
+  patitioning = ARRAY['current_date']
 
+
+)
