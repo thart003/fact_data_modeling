@@ -4,15 +4,16 @@ WITH yesterday AS (
 ),
 today AS (
 
-  SELECT user_id, date_trunc('day', event_time) as event_date, DATE('2023-01-01') as partition_date, COUNT(1) FROM taylorhart.web_events
+  SELECT user_id, CAST(date_trunc('day', event_time) as DATE) as event_date, COUNT(1) FROM taylorhart.web_events
   WHERE date_trunc('day', event_time) = DATE('2023-01-01')
-  GROUP BY user_id, date_trunc('day', event_time)
+  GROUP BY user_id, CAST(date_trunc('day', event_time) as DATE)
 )
 
 SELECT COALESCE(y.user_id, t.user_id) as user_id,
   CASE WHEN y.dates_active IS NOT NULL THEN ARRAY(t.event_date) || y.dates_active
   ELSE ARRAY(t.event_date)
-  END as dates_active
+  END as dates_active,
+  DATE('2023-01-01') AS date
 
 FROM yesterday y FULL OUTER JOIN today t ON y.user_id = t.user_id
 
