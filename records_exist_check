@@ -22,9 +22,8 @@ WITH today AS (
   )
 
   SELECT *,
-    history_int,
-    BIT_COUNT(history_int, 32)
+    TO_BASE(history_int, 2)
   FROM date_list_int
     
 
-  FROM date_list_int
+  
