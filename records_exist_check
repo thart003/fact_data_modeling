@@ -6,11 +6,12 @@ WITH today AS (
 )
   SELECT 
     user_id,
+    SUM(
     CASE WHEN CONTAINS(dates_active, sequence_date) THEN
       POW(2, 32 - DATE_DIFF('day', sequence_date, date))
     ELSE 0
     END
-      
+    )  
 
 
   FROM today
