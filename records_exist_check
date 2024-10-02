@@ -24,7 +24,8 @@ WITH today AS (
   SELECT *,
     TO_BASE(history_int, 2) AS history_in_binary,
     TO_BASE(FROM_BASE('1111111000000000000000000', 2), 2) as weekly_base,
-    BIT_COUNT(history_int, 32) AS num_days_active
+    BIT_COUNT(history_int, 32) AS num_days_active,
+    BITWISE_AND(TO_BASE(history_int, 2), TO_BASE('1111111000000000000000000', 2), 2) as is_weekly_active
   FROM date_list_int
     
 
