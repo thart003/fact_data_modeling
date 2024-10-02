@@ -4,7 +4,7 @@ WITH yesterday AS (
 ),
 today AS (
 
-  SELECT user_id, COUNT(1) FROM taylorhart.web_events
+  SELECT user_id, date_trunc('day', event_time) as event_date, DATE('2023-01-01') as partition_date, COUNT(1) FROM taylorhart.web_events
   WHERE date_trunc('day', event_time) = DATE('2023-01-01')
   GROUP BY user_id, date_trunc('day', event_time)
 )
