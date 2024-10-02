@@ -1,3 +1,5 @@
+INSERT INTO taylorhart.web_users_cumulated
+
 WITH yesterday AS (
   SELECT * FROM taylorhart.web_users_cumulated
   WHERE date = DATE('2022-12-31')
