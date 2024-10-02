@@ -1,7 +1,17 @@
 WITH today AS (
   SELECT * 
   FROM taylorhart.web_users_cumulated
-  WHERE date = DATE('2023-01-07')
+  WHERE 
+    DATE = DATE('2023-01-07')
 )
-  SELECT * FROM today
-  CROSS JOIN UNNEST (SEQUENCE(DATE('2023-01-01'), DATE('2023-01-07')))
+  SELECT 
+    user_id,
+    CASE WHEN CONTAINS(dates_active, sequence_date) THEN
+      POW(2, 32 - DATE_DIFF('day', sequence_date, date))
+    ELSE 0
+    END
+      
+
+
+  FROM today
+  CROSS JOIN UNNEST (SEQUENCE(DATE('2023-01-01'), DATE('2023-01-07'))) as t(sequence_date)
