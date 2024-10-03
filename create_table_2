@@ -43,7 +43,7 @@ today AS (
 SELECT 
   COALESCE(t.user_id, y.user_id) AS user_id,
   COALESCE(t.metric_name, y.metric_name) AS metric_name,
-  COALESCE(y.metric_array, REPEAT(null, CAST(DATE_DIFF('day', t.date, DATE('2023-08-01')) AS INTEGER))) || ARRAY(t.metric_value) AS metric_array
+  COALESCE(y.metric_array, REPEAT(null, CAST(DATE_DIFF('day', DATE('2023-08-01'), t.date) AS INTEGER))) || ARRAY(t.metric_value) AS metric_array
   '2023-08-01' AS month_start
 FROM 
   today t
