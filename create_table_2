@@ -19,3 +19,13 @@ SELECT
   CAST(event_time AS DATE) as date
 FROM taylorhart.web_events
 GROUP BY user_id, CAST(event_time AS DATE)
+
+
+CREATE TABLE taylorhart.monthly_array_metrics (
+  user_id BIGINT,
+  metric_name VARCHAR,
+  metric_array ARRAY(INTEGER),
+  month_start VARCHAR
+) WITH (
+  format = 'PARQUET',
+  partitioning = ARRAY['metric_name', 'month_start']
