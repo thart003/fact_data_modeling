@@ -60,5 +60,24 @@ WHERE
   ) = 1
 
 
+WITH aggregated AS (
+SELECT
+  user_id % 2 as is_user_id_odd,
+  metric_name,
+  month_start,
+  ARRAY[SUM(metric_array[1]),   SUM(metric_array[2]),   SUM(metric_array[3])] as agg_array
+
+FROM taylorhart.monthly_array_web_metrics
+GROUP BY 1, 2, 3
+)
+
+SELECT *, DATE_ADD('day', index -1, DATE(month_start)) as date
+FROM aggregated CROSS JOIN UNNEST (agg_array) WITH ORDINALITY as t(value, index)
+
+
+
+
+
+
 
 
