@@ -1,0 +1,9 @@
+CREATE TABLE taylorhart.daily_web_metrics (
+  user_id BIGINT,
+  metric_name VARCHAR,
+  metric_value BIGINT,
+  date DATE
+) WITH (
+  format = 'PARQUET',
+  partitioning = ARRAY['metric_name', 'date']
+)
