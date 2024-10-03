@@ -7,3 +7,15 @@ CREATE TABLE taylorhart.daily_web_metrics (
   format = 'PARQUET',
   partitioning = ARRAY['metric_name', 'date']
 )
+
+
+
+INSERT INTO taylorhart.daily_web_metrics
+
+SELECT 
+  user_id,
+  'visited_home_page' as metric_name,
+  COUNT(CASE WHEN url = '/' THEN 1 END) as metric_value,
+  CAST(event_time AS DATE) as date
+FROM taylorhart.web_events
+GROUP BY user_id, CAST(event_time AS DATE)
