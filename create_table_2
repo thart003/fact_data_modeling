@@ -29,3 +29,22 @@ CREATE TABLE taylorhart.monthly_array_metrics (
 ) WITH (
   format = 'PARQUET',
   partitioning = ARRAY['metric_name', 'month_start']
+)
+
+WITH yesterday AS (
+  SELECT * FROM taylorhart.monthly_array_web_metrics
+  WHERE month_start = DATE('2023-08-01')
+),
+today AS (
+  SELECT * FROM taylorhart.daily_web_metrics
+  WHERE date = '2023-08-01'
+)
+
+SELECT 
+  COALESCE(t.user_id, y.user_id) AS user_id,
+  COALESCE(t.metric_name, y.metric_name) AS metric_name,
+  NULL as metric_array,
+  '2023-08-01' AS month_start
+FROM today t
+FULL OUTER JOIN yesterday y ON t.user_id = y.user_id AND t.metric_name = y.metric_name
+
