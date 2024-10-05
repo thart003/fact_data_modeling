@@ -74,7 +74,7 @@ GROUP BY 1, 2, 3
 SELECT is_user_id_odd, metric_name, DATE_ADD('day', index -1, DATE(month_start)) as date
 FROM aggregated CROSS JOIN UNNEST (agg_array) WITH ORDINALITY as t(value, index)
 
-
+DELETE TABLE
 
 
 
